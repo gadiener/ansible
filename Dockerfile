@@ -16,6 +16,8 @@ ARG UNAME=ansible
 ARG GNAME=ansible
 ARG ANSIBLE_VERSION=2.5.5-r0
 
+ENV SSH_KEY ''
+
 RUN apk add ansible=${ANSIBLE_VERSION} ${DEPS}
 
 RUN addgroup -g ${GID} -S ${GNAME} && \
@@ -23,9 +25,6 @@ RUN addgroup -g ${GID} -S ${GNAME} && \
 USER ${UID}:${GID}
 
 RUN mkdir -p /home/${UNAME}/.ssh/
-
-ENV SSH_KEY ''
-ENV SSH_KEY_PATH /home/${UNAME}/.ssh/id_rsa
 
 COPY src/entrypoint.sh /bin/entrypoint
 

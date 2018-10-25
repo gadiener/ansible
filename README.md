@@ -7,11 +7,11 @@
 ### Docker run
 
 ```bash
-docker run -v ~/.ssh/:/ssh/:ro -v $(pwd):/playbook/:ro -it ansible ansible-playbook site.yml
+docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it gdiener/ansible all -m ping
 ```
 
 ```bash
-docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it ansible ansible-playbook site.yml
+docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
 ```
 
 ## Configuration
