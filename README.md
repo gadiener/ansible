@@ -33,7 +33,6 @@ docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it gdiener/an
 ```Bash
 ANSIBLE_HOST_KEY_CHECKING=False
 SSH_KEY=$(cat ~/.ssh/id_rsa)
-SSH_KEY_PATH='/home/ansible/.ssh/id_rsa'
 ```
 
 ### GitLab CI
