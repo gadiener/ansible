@@ -28,20 +28,39 @@ SHELL_CONFIG_FILES=(
 	~/.bash_profile
 )
 
+function error_message {
+	echo "[!] $1"
+	exit 1
+}
+
+function message {
+	echo ">> $1"
+}
+
+function help_message {
+	echo "TODO HELP"
+	exit 2
+}
+
 while [[ $# -gt 0 ]];do
 	key="$1"
 
 	case $key in
 		-h|--help)
-			echo "TODO HELP"
-			exit 2
+			help_message
 		;;
 		-k|--key)
+			if [ -z ${2+x} ]; then
+				error_message "Missing $key value"
+			fi
 			SSH_KEY_ENV=" -e \"SSH_KEY=\$(cat $2)\""
 			shift
 			shift
 		;;
 		-p|--playbook)
+			if [ -z ${2+x} ]; then
+				error_message "Missing $key value"
+			fi
 			PLAYBOOK_ENV=" -v $2:/playbook/"
 			shift
 			shift
@@ -56,8 +75,7 @@ while [[ $# -gt 0 ]];do
 			shift
 		;;
 		*)
-			echo "Unrecognized option $key"
-			exit 1
+			error_message "Unrecognized option $key"
     	;;
 	esac
 done
@@ -67,15 +85,15 @@ for _FILE in ${SHELL_CONFIG_FILES[@]}; do
 		if [ "$REMOVE" = true ]; then
 			if grep -q "$FILE_INCLUDE" $_FILE; then
 				sed -i.old "#$FILE_INCLUDE#d" $_FILE
-				echo "Aliases file uninstalled from $_FILE"
+				message "Aliases file uninstalled from $_FILE"
 			fi
 		else
 			if grep -q "$FILE_INCLUDE" $_FILE; then
-				echo "Aliases file is already installed in $_FILE"
+				message "Aliases file is already installed in $_FILE"
 			else
 				cp $_FILE $_FILE.old
-				echo $FILE_INCLUDE >> $_FILE
-				echo "Aliases file installed in $_FILE"
+				message $FILE_INCLUDE >> $_FILE
+				message "Aliases file installed in $_FILE"
 			fi
 			break
 		fi
@@ -85,7 +103,7 @@ done
 if [ "$REMOVE" = true ]; then
 	if [ -w "$FILE_NAME" ]; then
 		rm $FILE_NAME
-		echo "Aliases file removed"
+		message "Aliases file removed"
 	fi
 	exit 0
 fi
@@ -97,8 +115,8 @@ else
 fi
 
 for _COMMAND in ${COMMANDS[@]}; do
-	echo "alias ${_COMMAND}='docker run${SSH_KEY_ENV}${PLAYBOOK_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> $FILE_NAME
-	echo "Alias ${_COMMAND} installed"
+	message "alias ${_COMMAND}='docker run${SSH_KEY_ENV}${PLAYBOOK_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> $FILE_NAME
+	message "Alias ${_COMMAND} installed"
 done
 
 exit 0
