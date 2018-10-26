@@ -18,7 +18,7 @@ ARG ANSIBLE_VERSION=2.5.5-r0
 
 ENV SSH_KEY ''
 
-RUN apk add ansible=${ANSIBLE_VERSION} ${DEPS}
+RUN apk --no-cache add ansible=${ANSIBLE_VERSION} ${DEPS}
 
 RUN addgroup -g ${GID} -S ${GNAME} && \
     adduser -u ${UID} -S -G ${GNAME} ${UNAME}
