@@ -4,26 +4,70 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-  * [`latest`](https://github.com/gadiener/ansible/blob/master/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:latest.svg)](http://microbadger.com/images/gdiener/ansible)
-  * [`1`, `1.0`, `1.0.0`](https://github.com/gadiener/ansible/blob/1.0.0/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:1.svg)](http://microbadger.com/images/gdiener/ansible)
+  * [`latest`](https://github.com/gadiener/ansible/blob/master/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:latest.svg)](http://microbadger.com/images/gdiener/ansible:latest)
+  * [`1`, `1.0`, `1.0.0`](https://github.com/gadiener/ansible/blob/1.0.0/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:1.svg)](http://microbadger.com/images/gdiener/ansible:1)
 
 ## How to use
 
 ### Docker run
 
-```bash
-docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it gdiener/ansible all -m ping
-```
+ * [ansible](https://docs.ansible.com/ansible/2.5/cli/ansible.html): Define and run a single task ‘playbook’ against a set of hosts.
 
 ```bash
-docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
+docker run -v $(pwd):/playbook/ -it gdiener/ansible all -m ping
 ```
+
+* [ansible-playbook](https://docs.ansible.com/ansible/2.5/cli/ansible-playbook.html): Runs Ansible playbooks, executing the defined tasks on the targeted hosts.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
+```
+
+* [ansible-vault](https://docs.ansible.com/ansible/2.5/cli/ansible-vault.html): Encryption/decryption utility for Ansible data files.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
+```
+
+* [ansible-galaxy](https://docs.ansible.com/ansible/2.5/cli/ansible-galaxy.html):  Manage Ansible roles in shared repostories
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
+```
+
+* [ansible-console](https://docs.ansible.com/ansible/2.5/cli/ansible-console.html): A REPL that allows for running ad-hoc tasks against a chosen inventory.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-console
+```
+
+* [ansible-config](https://docs.ansible.com/ansible/2.5/cli/ansible-config.html): Config command line class.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-config dump
+```
+
+* [ansible-doc](https://docs.ansible.com/ansible/2.5/cli/ansible-doc.html): Plugin documentation tool.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-doc file
+```
+
+* [ansible-inventory](https://docs.ansible.com/ansible/2.5/cli/ansible-inventory.html): Display or dump the configured inventory as Ansible sees it.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-inventory --host localhost
+```
+
+* [ansible-pull](https://docs.ansible.com/ansible/2.5/cli/ansible-pull.html): Pulls playbooks from a VCS repo and executes them for the local host.
+
+```bash
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull
+```
+
+⁉️ *This command is useless in the Docker context but you can still do it* 😄
 
 ## Configuration
-
-@TODO
-
-### Shell aliases
 
 @TODO
 
@@ -31,14 +75,25 @@ docker run -e "SSH_KEY=$(cat ~/.ssh/id_rsa)" -v $(pwd):/playbook/ -it gdiener/an
 
 @TODO
 
+**⛔️ WARNING: Do not add a volume in `~/.ssh/:/home/ansible/.ssh/` without the read-only flag, with the environment variable `SSH_KEY` set you'll lose your private key!**
+
 ### Enviroment variables
 
 @TODO
 
 ```Bash
-ANSIBLE_HOST_KEY_CHECKING=False
 SSH_KEY=$(cat ~/.ssh/id_rsa)
 ```
+
+### Use it without tty
+
+```
+ANSIBLE_HOST_KEY_CHECKING=False
+```
+
+### Shell aliases
+
+@TODO
 
 ### GitLab CI
 
