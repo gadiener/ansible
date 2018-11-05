@@ -112,7 +112,6 @@ for _FILE in ${SHELL_CONFIG_FILES[@]}; do
 		else
 			if grep -q "${FILE_INCLUDE}" ${_FILE}; then
 				message "Aliases file is already installed in ${_FILE}"
-				exit 0
 			else
 				cp ${_FILE} ${_FILE}.old
 				echo '' >> ${_FILE}
