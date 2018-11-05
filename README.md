@@ -97,6 +97,8 @@ Options:
 ansible-aliases -k $SSH_KEY_PATH -e 'ANSIBLE_HOST_KEY_CHECKING=False'
 ```
 
+After installing the aliases, the shell must be restarted.
+
 To remove aliases you can use the following commands:
 
 ```bash
