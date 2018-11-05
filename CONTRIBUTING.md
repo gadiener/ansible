@@ -21,3 +21,4 @@ This project is maintained by using the [Semantic Versioning Specification (SemV
 ## Contributors
 
 Gabriele Diener [@gadiener](https://github.com/gadiener)
+Flavio De Stefano [@kopiro](https://github.com/kopiro)
