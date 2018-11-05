@@ -84,7 +84,7 @@ for _FILE in ${SHELL_CONFIG_FILES[@]}; do
 	if [ -w "$_FILE" ]; then
 		if [ "$REMOVE" = true ]; then
 			if grep -q "$FILE_INCLUDE" $_FILE; then
-				sed -i.old "#$FILE_INCLUDE#d" $_FILE
+				sed -i.old "s#$FILE_INCLUDE##" $_FILE
 				message "Aliases file uninstalled from $_FILE"
 			fi
 		else
@@ -92,7 +92,7 @@ for _FILE in ${SHELL_CONFIG_FILES[@]}; do
 				message "Aliases file is already installed in $_FILE"
 			else
 				cp $_FILE $_FILE.old
-				message $FILE_INCLUDE >> $_FILE
+				echo $FILE_INCLUDE >> $_FILE
 				message "Aliases file installed in $_FILE"
 			fi
 			break
@@ -115,7 +115,7 @@ else
 fi
 
 for _COMMAND in ${COMMANDS[@]}; do
-	message "alias ${_COMMAND}='docker run${SSH_KEY_ENV}${PLAYBOOK_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> $FILE_NAME
+	echo "alias ${_COMMAND}='docker run${SSH_KEY_ENV}${PLAYBOOK_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> $FILE_NAME
 	message "Alias ${_COMMAND} installed"
 done
 
