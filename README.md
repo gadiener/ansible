@@ -16,69 +16,102 @@
  * [ansible](https://docs.ansible.com/ansible/2.5/cli/ansible.html): Define and run a single task ‘playbook’ against a set of hosts.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible all -m ping
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible all -m ping
 ```
 
 * [ansible-playbook](https://docs.ansible.com/ansible/2.5/cli/ansible-playbook.html): Runs Ansible playbooks, executing the defined tasks on the targeted hosts.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
 ```
 
 * [ansible-vault](https://docs.ansible.com/ansible/2.5/cli/ansible-vault.html): Encryption/decryption utility for Ansible data files.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
 ```
 
 * [ansible-galaxy](https://docs.ansible.com/ansible/2.5/cli/ansible-galaxy.html):  Manage Ansible roles in shared repostories
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
 ```
 
 * [ansible-console](https://docs.ansible.com/ansible/2.5/cli/ansible-console.html): A REPL that allows for running ad-hoc tasks against a chosen inventory.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-console
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-console
 ```
 
 * [ansible-config](https://docs.ansible.com/ansible/2.5/cli/ansible-config.html): Config command line class.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-config dump
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-config dump
 ```
 
 * [ansible-doc](https://docs.ansible.com/ansible/2.5/cli/ansible-doc.html): Plugin documentation tool.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-doc file
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-doc file
 ```
 
 * [ansible-inventory](https://docs.ansible.com/ansible/2.5/cli/ansible-inventory.html): Display or dump the configured inventory as Ansible sees it.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-inventory --host localhost
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-inventory --host localhost
 ```
 
 * [ansible-pull](https://docs.ansible.com/ansible/2.5/cli/ansible-pull.html): Pulls playbooks from a VCS repo and executes them for the local host.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull -U git@github.com:gadiener/unknown-ansible-repository.git site.yml
+$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull -U git@github.com:gadiener/unknown-ansible-repository.git site.yml
 ```
 
 ⁉️ *This command is useless in the Docker context but you can still do it* 😄
 
 ### Add shell aliases
 
-@TODO
+To install the aliases script you can use the following commands:
+
+```bash
+$ curl -o /usr/local/bin/ansible-aliases https://raw.githubusercontent.com/gadiener/ansible/master/ansible-aliases.sh
+$ chmod +x /usr/local/bin/ansible-aliases
+```
+
+Then you can use the script.
+
+```bash
+$ ansible-aliases -h
+
+Usage: ansible-aliases [OPTIONS]
+
+>> Install dockerized Ansible tools aliases
+
+Options:
+   -k, --key string         The path of the SSH key to use
+   -p, --playbook string    The path of the playbook to use (default $(pwd))
+   -t, --tag string         The Docker tag to use
+   -e, --env string         Set environment variables
+       --remove             Uninstall Ansible aliases
+```
+
+```bash
+$ ansible-aliases -k $SSH_KEY_PATH -e 'ANSIBLE_HOST_KEY_CHECKING=False'
+```
+
+To remove the aliases you can use the following commands:
+
+```bash
+$ ansible-aliases --remove
+$ rm /usr/local/bin/ansible-aliases
+```
 
 
 ## Configuration
 
 ### Enviroment variables
 
-@TODO
+The SSH_KEY variable must contains che SSH key used by Ansible to connect to the cluster.
 
 ```Bash
 SSH_KEY=$(cat ~/.ssh/id_rsa)
@@ -86,19 +119,15 @@ SSH_KEY=$(cat ~/.ssh/id_rsa)
 
 ### Volumes
 
-@TODO
+`/playbook`
+
+`/etc/ansible`
 
 **⛔️ WARNING: Do not add a volume in `~/.ssh/:/home/ansible/.ssh/` without the read-only flag. With the environment variable `SSH_KEY` set you'll lose your private key!**
 
-### Use it without tty
-
-```
-ANSIBLE_HOST_KEY_CHECKING=False
-```
-
 ### Use it in GitLab CI
 
-@TODO
+@todo: I'm waiting for your pull request 😉
 
 
 ## Contributing
