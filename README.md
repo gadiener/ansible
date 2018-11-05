@@ -119,9 +119,9 @@ SSH_KEY=$(cat ~/.ssh/id_rsa)
 
 ### Volumes
 
-`/playbook`
+To share your tasks or playbook's files you can bind a volume to `/playbook`.
 
-`/etc/ansible`
+You can bind a volume to `/etc/ansible` to share your local conficuration with Ansible in docker.
 
 **⛔️ WARNING: Do not add a volume in `~/.ssh/:/home/ansible/.ssh/` without the read-only flag. With the environment variable `SSH_KEY` set you'll lose your private key!**
 
