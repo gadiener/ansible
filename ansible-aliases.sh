@@ -114,6 +114,7 @@ for _FILE in ${SHELL_CONFIG_FILES[@]}; do
 				message "Aliases file is already installed in ${_FILE}"
 			else
 				cp ${_FILE} ${_FILE}.old
+				echo '' >> ${_FILE}
 				echo ${FILE_INCLUDE} >> ${_FILE}
 				message "Aliases file installed in ${_FILE}"
 			fi
@@ -140,5 +141,3 @@ for _COMMAND in ${COMMANDS[@]}; do
 	echo "alias ${_COMMAND}='docker run ${SSH_KEY_ENV} ${PLAYBOOK_ENV} ${EXTRA_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> ${FILE_NAME}
 	message "Alias ${_COMMAND} installed"
 done
-
-exit 0
