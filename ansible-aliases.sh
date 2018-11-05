@@ -7,6 +7,7 @@ DOCKER_IMAGE='gdiener/ansible'
 DOCKER_TAG='latest'
 SSH_KEY_ENV=''
 PLAYBOOK_ENV=" -v \$(pwd):/playbook/"
+EXTRA_ENV=()
 REMOVE=false
 FILE_NAME=~/.ansible-aliases
 FILE_INCLUDE="source $FILE_NAME"
@@ -29,7 +30,7 @@ SHELL_CONFIG_FILES=(
 )
 
 function error_message {
-	echo "[!] $1"
+	echo "[!] $1, use '--help' flag for more information"
 	exit 1
 }
 
@@ -38,8 +39,24 @@ function message {
 }
 
 function help_message {
-	echo "TODO HELP"
+	echo
+	echo "Usage: ansible-aliases [OPTIONS]"
+	echo
+	message "Install dockerized Ansible tools aliases"
+	echo
+	echo 'Options:'
+	echo '   -k, --key string         The path of the SSH key to use'
+	echo '   -p, --playbook string    The path of the playbook to use (default $(pwd))'
+	echo '   -t, --tag string         The Docker tag to use'
+	echo '   -e, --env string         Set environment variables'
+	echo '       --remove             Uninstall Ansible aliases'
 	exit 2
+}
+
+function implode {
+	local IFS="$1"
+	shift
+	echo "$*"
 }
 
 while [[ $# -gt 0 ]];do
@@ -53,7 +70,7 @@ while [[ $# -gt 0 ]];do
 			if [ -z ${2+x} ]; then
 				error_message "Missing $key value"
 			fi
-			SSH_KEY_ENV=" -e \"SSH_KEY=\$(cat $2)\""
+			SSH_KEY_ENV="-e \"SSH_KEY=\$(cat $2)\""
 			shift
 			shift
 		;;
@@ -61,12 +78,23 @@ while [[ $# -gt 0 ]];do
 			if [ -z ${2+x} ]; then
 				error_message "Missing $key value"
 			fi
-			PLAYBOOK_ENV=" -v $2:/playbook/"
+			PLAYBOOK_ENV="-v $2:/playbook/"
 			shift
 			shift
 		;;
 		-t|--tag)
-			REMOVE=true
+			if [ -z ${2+x} ]; then
+				error_message "Missing $key value"
+			fi
+			DOCKER_TAG=$2
+			shift
+			shift
+		;;
+		-e|--env)
+			if [ -z ${2+x} ]; then
+				error_message "Missing $key value"
+			fi
+			EXTRA_ENV+=("-e \"$2\"")
 			shift
 			shift
 		;;
@@ -115,7 +143,8 @@ else
 fi
 
 for _COMMAND in ${COMMANDS[@]}; do
-	echo "alias ${_COMMAND}='docker run${SSH_KEY_ENV}${PLAYBOOK_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> $FILE_NAME
+	EXTRA_ENV=`implode ' ' $EXTRA_ENV`
+	echo "alias ${_COMMAND}='docker run ${SSH_KEY_ENV} ${PLAYBOOK_ENV} ${EXTRA_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> $FILE_NAME
 	message "Alias ${_COMMAND} installed"
 done
 
