@@ -14,55 +14,55 @@
 * [ansible](https://docs.ansible.com/ansible/2.5/cli/ansible.html): Define and run a single task ‘playbook’ against a set of hosts.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible all -m ping
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible all -m ping
 ```
 
 * [ansible-playbook](https://docs.ansible.com/ansible/2.5/cli/ansible-playbook.html): Runs Ansible playbooks, executing the defined tasks on the targeted hosts.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-playbook site.yml
 ```
 
 * [ansible-vault](https://docs.ansible.com/ansible/2.5/cli/ansible-vault.html): Encryption/decryption utility for Ansible data files.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-vault encrypt_string
 ```
 
 * [ansible-galaxy](https://docs.ansible.com/ansible/2.5/cli/ansible-galaxy.html):  Manage Ansible roles in shared repositories
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-galaxy login
 ```
 
 * [ansible-console](https://docs.ansible.com/ansible/2.5/cli/ansible-console.html): A REPL that allows for running ad-hoc tasks against a chosen inventory.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-console
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-console
 ```
 
 * [ansible-config](https://docs.ansible.com/ansible/2.5/cli/ansible-config.html): Config command line class.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-config dump
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-config dump
 ```
 
 * [ansible-doc](https://docs.ansible.com/ansible/2.5/cli/ansible-doc.html): Plugin documentation tool.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-doc file
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-doc file
 ```
 
 * [ansible-inventory](https://docs.ansible.com/ansible/2.5/cli/ansible-inventory.html): Display or dump the configured inventory as Ansible sees it.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-inventory --host localhost
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-inventory --host localhost
 ```
 
 * [ansible-pull](https://docs.ansible.com/ansible/2.5/cli/ansible-pull.html): Pulls playbooks from a VCS repo and executes them for the local host.
 
 ```bash
-docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull -U git@github.com:gadiener/unknown-ansible-repository.git site.yml
+docker run -v $(pwd):/workspace/ -it gdiener/ansible ansible-pull -U git@github.com:gadiener/unknown-ansible-repository.git site.yml
 ```
 
 ⁉️ *This command is useless in the Docker context but you can still do it* 😄
@@ -87,7 +87,7 @@ Usage: ansible-aliases [OPTIONS]
 
 Options:
    -k, --key string         The path of the SSH key to use
-   -p, --playbook string    The path of the playbook to use (default $(pwd))
+   -w, --workspace string   The path of the workspace to use (default $(pwd))
    -t, --tag string         The Docker tag to use
    -e, --env string         Set environment variables
        --remove             Uninstall Ansible aliases
@@ -116,7 +116,7 @@ SSH_KEY=$(cat ~/.ssh/id_rsa)
 
 ### Volumes
 
-To share your tasks or playbook's files you can bind a volume to `/playbook`.
+To share your tasks or playbook's files you can bind a volume to `/workspace`.
 
 You can bind a volume to `/etc/ansible` to share your local conficuration with Ansible in docker.
 

@@ -28,9 +28,9 @@ RUN mkdir -p /home/${UNAME}/.ssh/
 
 COPY src/entrypoint.sh /bin/entrypoint
 
-WORKDIR /playbook
+WORKDIR /workspace
 
-VOLUME [ "/playbook", "/etc/ansible" ]
+VOLUME [ "/workspace", "/etc/ansible" ]
 
 ENTRYPOINT [ "entrypoint" ]
 CMD [ "ansible", "-h" ]

@@ -6,7 +6,7 @@ set -o pipefail
 DOCKER_IMAGE='gdiener/ansible'
 DOCKER_TAG='latest'
 SSH_KEY_ENV=''
-PLAYBOOK_ENV=" -v \$(pwd):/playbook/"
+WORKSPACE_ENV=" -v \$(pwd):/workspace/"
 EXTRA_ENV=''
 REMOVE=false
 FILE_NAME=~/.ansible-aliases
@@ -46,7 +46,7 @@ function help_message {
 	echo
 	echo 'Options:'
 	echo '   -k, --key string         The path of the SSH key to use'
-	echo '   -p, --playbook string    The path of the playbook to use (default $(pwd))'
+	echo '   -w, --workspace string    The path of the workspace to use (default $(pwd))'
 	echo '   -t, --tag string         The Docker tag to use'
 	echo '   -e, --env string         Set environment variables'
 	echo '       --remove             Uninstall Ansible aliases'
@@ -68,11 +68,11 @@ while [[ $# -gt 0 ]];do
 			shift
 			shift
 		;;
-		-p|--playbook)
+		-2|--workspace)
 			if [ -z ${2+x} ]; then
 				error_message "Missing ${key} value"
 			fi
-			PLAYBOOK_ENV="-v ${2}:/playbook/"
+			WORKSPACE_ENV="-v ${2}:/playbook/"
 			shift
 			shift
 		;;
@@ -138,6 +138,6 @@ else
 fi
 
 for _COMMAND in ${COMMANDS[@]}; do
-	echo "alias ${_COMMAND}='docker run ${SSH_KEY_ENV} ${PLAYBOOK_ENV} ${EXTRA_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> ${FILE_NAME}
+	echo "alias ${_COMMAND}='docker run ${SSH_KEY_ENV} ${WORKSPACE_ENV} ${EXTRA_ENV} -it ${DOCKER_IMAGE}:${DOCKER_TAG} ${_COMMAND}'" >> ${FILE_NAME}
 	message "Alias ${_COMMAND} installed"
 done
