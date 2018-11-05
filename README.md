@@ -31,7 +31,7 @@ $ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
 $ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
 ```
 
-* [ansible-galaxy](https://docs.ansible.com/ansible/2.5/cli/ansible-galaxy.html):  Manage Ansible roles in shared repostories
+* [ansible-galaxy](https://docs.ansible.com/ansible/2.5/cli/ansible-galaxy.html):  Manage Ansible roles in shared repositories
 
 ```bash
 $ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
@@ -146,15 +146,13 @@ Pull requests are **highly appreciated**.
 
 Solve a problem. Features are great, but even better is cleaning-up and fixing issues in the code that you discover.
 
-
-## Contributors
-
-Gabriele Diener [@gadiener](https://github.com/gadiener)
-
-
-## Versioning
+### Versioning
 
 This project is maintained by using the [Semantic Versioning Specification (SemVer)](http://semver.org).
+
+### Contributors
+
+Gabriele Diener [@gadiener](https://github.com/gadiener)
 
 
 ## Copyright and license
