@@ -2,69 +2,67 @@
 
 > Use Ansible command line tools inside Docker in CI or Local Environment.
 
-
 ## Supported tags and respective `Dockerfile` links
 
-  * [`latest`](https://github.com/gadiener/ansible/blob/master/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:latest.svg)](http://microbadger.com/images/gdiener/ansible:latest)
-  * [`1`, `1.0`, `1.0.0`](https://github.com/gadiener/ansible/blob/1.0.0/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:1.svg)](http://microbadger.com/images/gdiener/ansible:1)
-
+* [`latest`](https://github.com/gadiener/ansible/blob/master/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:latest.svg)](http://microbadger.com/images/gdiener/ansible:latest)
+* [`1`, `1.0`, `1.0.0`](https://github.com/gadiener/ansible/blob/1.0.0/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:1.svg)](http://microbadger.com/images/gdiener/ansible:1)
 
 ## How to use
 
 ### Docker run
 
- * [ansible](https://docs.ansible.com/ansible/2.5/cli/ansible.html): Define and run a single task ‘playbook’ against a set of hosts.
+* [ansible](https://docs.ansible.com/ansible/2.5/cli/ansible.html): Define and run a single task ‘playbook’ against a set of hosts.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible all -m ping
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible all -m ping
 ```
 
 * [ansible-playbook](https://docs.ansible.com/ansible/2.5/cli/ansible-playbook.html): Runs Ansible playbooks, executing the defined tasks on the targeted hosts.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-playbook site.yml
 ```
 
 * [ansible-vault](https://docs.ansible.com/ansible/2.5/cli/ansible-vault.html): Encryption/decryption utility for Ansible data files.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-vault encrypt_string
 ```
 
 * [ansible-galaxy](https://docs.ansible.com/ansible/2.5/cli/ansible-galaxy.html):  Manage Ansible roles in shared repositories
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-galaxy login
 ```
 
 * [ansible-console](https://docs.ansible.com/ansible/2.5/cli/ansible-console.html): A REPL that allows for running ad-hoc tasks against a chosen inventory.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-console
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-console
 ```
 
 * [ansible-config](https://docs.ansible.com/ansible/2.5/cli/ansible-config.html): Config command line class.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-config dump
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-config dump
 ```
 
 * [ansible-doc](https://docs.ansible.com/ansible/2.5/cli/ansible-doc.html): Plugin documentation tool.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-doc file
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-doc file
 ```
 
 * [ansible-inventory](https://docs.ansible.com/ansible/2.5/cli/ansible-inventory.html): Display or dump the configured inventory as Ansible sees it.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-inventory --host localhost
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-inventory --host localhost
 ```
 
 * [ansible-pull](https://docs.ansible.com/ansible/2.5/cli/ansible-pull.html): Pulls playbooks from a VCS repo and executes them for the local host.
 
 ```bash
-$ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull -U git@github.com:gadiener/unknown-ansible-repository.git site.yml
+docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull -U git@github.com:gadiener/unknown-ansible-repository.git site.yml
 ```
 
 ⁉️ *This command is useless in the Docker context but you can still do it* 😄
@@ -74,8 +72,8 @@ $ docker run -v $(pwd):/playbook/ -it gdiener/ansible ansible-pull -U git@github
 To install the aliases script you can use the following commands:
 
 ```bash
-$ curl -o /usr/local/bin/ansible-aliases https://raw.githubusercontent.com/gadiener/ansible/master/ansible-aliases.sh
-$ chmod +x /usr/local/bin/ansible-aliases
+curl -o /usr/local/bin/ansible-aliases https://raw.githubusercontent.com/gadiener/ansible/master/ansible-aliases.sh
+chmod +x /usr/local/bin/ansible-aliases
 ```
 
 Then you can use the script.
@@ -96,20 +94,19 @@ Options:
 ```
 
 ```bash
-$ ansible-aliases -k $SSH_KEY_PATH -e 'ANSIBLE_HOST_KEY_CHECKING=False'
+ansible-aliases -k $SSH_KEY_PATH -e 'ANSIBLE_HOST_KEY_CHECKING=False'
 ```
 
-To remove the aliases you can use the following commands:
+To remove aliases you can use the following commands:
 
 ```bash
-$ ansible-aliases --remove
-$ rm /usr/local/bin/ansible-aliases
+ansible-aliases --remove
+rm /usr/local/bin/ansible-aliases
 ```
-
 
 ## Configuration
 
-### Enviroment variables
+### Environment variables
 
 The SSH_KEY variable must contains che SSH key used by Ansible to connect to the cluster.
 
@@ -128,7 +125,6 @@ You can bind a volume to `/etc/ansible` to share your local conficuration with A
 ### Use it in GitLab CI
 
 @todo: I'm waiting for your pull request 😉
-
 
 ## Contributing
 
@@ -153,7 +149,6 @@ This project is maintained by using the [Semantic Versioning Specification (SemV
 ### Contributors
 
 Gabriele Diener [@gadiener](https://github.com/gadiener)
-
 
 ## Copyright and license
 
