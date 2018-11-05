@@ -157,4 +157,4 @@ Gabriele Diener [@gadiener](https://github.com/gadiener)
 
 ## Copyright and license
 
-Copyright 2017 [Gabriele Diener](https://gdiener.com) under the [MIT license](LICENSE.md).
+Copyright 2018 [Gabriele Diener](https://gdiener.com) under the [MIT license](LICENSE.md).
