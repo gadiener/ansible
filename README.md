@@ -7,7 +7,7 @@
 * [`latest`](https://github.com/gadiener/ansible/blob/master/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:latest.svg)](http://microbadger.com/images/gdiener/ansible:latest)
 * [`1`, `1.0`, `1.0.0`](https://github.com/gadiener/ansible/blob/1.0.0/Dockerfile) [![](https://images.microbadger.com/badges/image/gdiener/ansible:1.svg)](http://microbadger.com/images/gdiener/ansible:1)
 
-## How to use
+## How to use it
 
 ### Docker run
 
